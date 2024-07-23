@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const preferredBusLines = ['160', '순환1', '순환2', '급행01'];  // 자주 타는 버스 노선 번호
 
         // CORS Proxy를 사용한 API URL
-        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+        const corsProxy = 'https://api.allorigins.win/get?url=';
         const apiUrlBase = 'http://121.147.206.212/json/arriveApi?BUSSTOP_ID=';
         const busArrivalsContainer = document.getElementById('busArrivals');
         busArrivalsContainer.innerHTML = '';
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('버튼 클릭됨');  // 버튼이 클릭되었는지 확인
 
         arsNumbers.forEach(arsNumber => {
-            const apiUrl = `${corsProxy}${apiUrlBase}${arsNumber}`;
+            const apiUrl = `${corsProxy}${encodeURIComponent(apiUrlBase + arsNumber)}`;
 
             console.log(`Fetching data for ARS number: ${arsNumber}`);  // API 호출 여부 확인
 
@@ -20,9 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     console.log('Data fetched:', data);  // 데이터가 잘 받아지는지 확인
+                    const parsedData = JSON.parse(data.contents);  // allorigins 프록시에서 반환된 데이터 파싱
 
-                    if (data.BUSSTOP_LIST && data.BUSSTOP_LIST.length > 0) {
-                        data.BUSSTOP_LIST.forEach(bus => {
+                    if (parsedData.BUSSTOP_LIST && parsedData.BUSSTOP_LIST.length > 0) {
+                        parsedData.BUSSTOP_LIST.forEach(bus => {
                             if (preferredBusLines.includes(bus.LINE_NAME)) {
                                 const busElement = document.createElement('div');
                                 busElement.classList.add('bus-arrival');

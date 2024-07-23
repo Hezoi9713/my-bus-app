@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch(stationApiUrl)
         .then(response => response.json())
         .then(data => {
+            console.log('Station data fetched:', data);
             const parsedData = JSON.parse(data.contents);  // allorigins 프록시에서 반환된 데이터 파싱
             const busStop = parsedData.STATION_LIST.find(station => station.ARS_ID == arsNumber);
             if (busStop) {
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
+                console.log('Arrival data fetched:', data);
                 const parsedData = JSON.parse(data.contents);  // allorigins 프록시에서 반환된 데이터 파싱
 
                 busArrivalsContainer.innerHTML = '';  // 기존 데이터를 비웁니다

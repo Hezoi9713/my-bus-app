@@ -2,16 +2,68 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나주시 버스 도착 정보</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label, select, button {
+            display: block;
+            margin-bottom: 10px;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>나주시 버스 도착 정보</h1>
-        <button id="busStopButton">하행</button>
-        <div id="busArrivals"></div>
+        <label for="arsId">ARS 번호 입력:</label>
+        <input type="text" id="arsId" placeholder="ARS 번호를 입력하세요">
+
+        <button onclick="fetchBusStopName()">정류소 이름 확인</button>
+
+        <div id="busStopName"></div>
+        <div id="results">
+            <table id="arrivalInfo">
+                <thead>
+                    <tr>
+                        <th>ARS 번호</th>
+                        <th>노선 이름</th>
+                        <th>도착 예상 시간 (분)</th>
+                        <th>남은 정류소 수</th>
+                        <th>도착지</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 도착 정보가 여기에 추가됩니다 -->
+                </tbody>
+            </table>
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <script src="app.js"></script>
 </body>
 </html>

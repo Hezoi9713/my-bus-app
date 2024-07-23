@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const parsedData = JSON.parse(data.contents);  // allorigins 프록시에서 반환된 데이터 파싱
             const busStop = parsedData.STATION_LIST.find(station => station.ARS_ID == arsNumber);
             if (busStop) {
-                busStopButton.textContent = `${busStop.BUSSTOP_NAME} (${arsNumber})`;
+                busStopButton.textContent = busStop.BUSSTOP_NAME;
                 busStopButton.addEventListener('click', () => loadBusArrivals(busStop.BUSSTOP_ID, busStop.BUSSTOP_NAME));
             } else {
                 busStopButton.textContent = '정류소 정보를 로드할 수 없습니다.';

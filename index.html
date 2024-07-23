@@ -7,18 +7,36 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f8f9fa;
         }
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        label, select, button {
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label, input, button {
             display: block;
+            width: 100%;
             margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
         #results {
             margin-top: 20px;
@@ -31,6 +49,7 @@
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
+            text-align: center;
         }
         th {
             background-color: #f4f4f4;
@@ -50,7 +69,7 @@
             <table id="arrivalInfo">
                 <thead>
                     <tr>
-                        <th>ARS 번호</th>
+                        <th>정류소 이름</th>
                         <th>노선 이름</th>
                         <th>도착 예상 시간 (분)</th>
                         <th>남은 정류소 수</th>

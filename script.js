@@ -63,27 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                     busArrivalsContainer.appendChild(busTable);
                 } else {
-                    const busTable = document.createElement('table');
-                    busTable.classList.add('bus-table');
-                    busTable.innerHTML = `
-                        <tr>
-                            <th>정류소 이름</th>
-                            <th>노선 이름</th>
-                            <th>도착 예상 시간</th>
-                            <th>남은 정류소</th>
-                            <th>도착지</th>
-                        </tr>
-                    `;
-                    const busRow = document.createElement('tr');
-                    busRow.innerHTML = `
-                        <td>${busStopName}</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    `;
-                    busTable.appendChild(busRow);
-                    busArrivalsContainer.appendChild(busTable);
+                    busArrivalsContainer.innerHTML = '<p>해당 정류소에 도착 예정인 버스가 없습니다.</p>';
                 }
             })
             .catch(error => {

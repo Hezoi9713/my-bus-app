@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const busStop = parsedData.STATION_LIST.find(station => station.ARS_ID == arsNumber);
             if (busStop) {
                 busStopButton.textContent = `${busStop.BUSSTOP_NAME} (${arsNumber})`;
-                busStopButton.addEventListener('click', () => loadBusArrivals(busStop.BUSSTOP_ID));
+                busStopButton.addEventListener('click', () => loadBusArrivals(busStop.BUSSTOP_ID, busStop.BUSSTOP_NAME));
             } else {
                 busStopButton.textContent = '정류소 정보를 로드할 수 없습니다.';
             }
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             busStopButton.textContent = '정류소 정보를 로드할 수 없습니다.';
         });
 
-    function loadBusArrivals(busStopId) {
+    function loadBusArrivals(busStopId, busStopName) {
         const apiUrl = `${corsProxy}${encodeURIComponent(arriveApiUrlBase + busStopId)}`;
         fetch(apiUrl)
             .then(response => response.json())
@@ -40,22 +40,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     busTable.classList.add('bus-table');
                     busTable.innerHTML = `
                         <tr>
-                            <th>정류소</th>
+                            <th>정류소 이름</th>
                             <th>노선 이름</th>
                             <th>도착 예상 시간</th>
                             <th>남은 정류소</th>
-                            <th>다음 정류소</th>
                             <th>도착지</th>
                         </tr>
                     `;
                     parsedData.ARRIVE_LIST.forEach(bus => {
                         const busRow = document.createElement('tr');
                         busRow.innerHTML = `
-                            <td>${bus.BUSSTOP_NAME}</td>
+                            <td>${busStopName}</td>
                             <td>${bus.LINE_NAME}</td>
                             <td>${bus.REMAIN_MIN || '-'}</td>
                             <td>${bus.REMAIN_STOP || '-'}</td>
-                            <td>${bus.NEXT_BUSSTOP || '-'}</td>
                             <td>${bus.DIR_END || '-'}</td>
                         `;
                         busTable.appendChild(busRow);
@@ -66,17 +64,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     busTable.classList.add('bus-table');
                     busTable.innerHTML = `
                         <tr>
-                            <th>정류소</th>
+                            <th>정류소 이름</th>
                             <th>노선 이름</th>
                             <th>도착 예상 시간</th>
                             <th>남은 정류소</th>
-                            <th>다음 정류소</th>
                             <th>도착지</th>
                         </tr>
                     `;
                     const busRow = document.createElement('tr');
                     busRow.innerHTML = `
-                        <td>${parsedData.LINE_NAME}</td>
+                        <td>${busStopName}</td>
                         <td>-</td>
                         <td>-</td>
                         <td>-</td>

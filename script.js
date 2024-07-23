@@ -1,37 +1,44 @@
-document.getElementById('getBusInfo').addEventListener('click', function() {
-    const busStopId = document.getElementById('busStopId').value;
-    if (!busStopId) {
-        alert('정류소 번호를 입력하세요.');
-        return;
-    }
+document.getElementById('getDownwardInfo').addEventListener('click', function() {
+    // 예제 ARS 번호와 노선 이름 배열 (사용자가 입력할 부분)
+    const arsNumbers = ['12345', '67890'];  // 자주 가는 정류소의 ARS 번호
+    const preferredBusLines = ['100', '200'];  // 자주 타는 버스 노선 번호
 
-    const apiUrl = `http://121.147.206.212/json/arriveApi?BUSSTOP_ID=${busStopId}`;
+    const apiUrlBase = 'http://121.147.206.212/json/arriveApi?BUSSTOP_ID=';
+    const busArrivalsContainer = document.getElementById('busArrivals');
+    busArrivalsContainer.innerHTML = '';
 
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            const busArrivals = document.getElementById('busArrivals');
-            busArrivals.innerHTML = '';
+    arsNumbers.forEach(arsNumber => {
+        const apiUrl = `${apiUrlBase}${arsNumber}`;
 
-            if (data.BUSSTOP_LIST && data.BUSSTOP_LIST.length > 0) {
-                data.BUSSTOP_LIST.forEach(bus => {
-                    const busElement = document.createElement('div');
-                    busElement.classList.add('bus-arrival');
-                    busElement.innerHTML = `
-                        <strong>노선 번호:</strong> ${bus.LINE_ID} <br>
-                        <strong>버스 번호:</strong> ${bus.BUS_ID} <br>
-                        <strong>도착 예상 시간:</strong> ${bus.REMAIN_MIN} 분 <br>
-                        <strong>남은 정류소:</strong> ${bus.REMAIN_STOP} <br>
-                        <strong>노선 이름:</strong> ${bus.LINE_NAME}
-                    `;
-                    busArrivals.appendChild(busElement);
-                });
-            } else {
-                busArrivals.innerHTML = '도착 예정 버스가 없습니다.';
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching bus arrival data:', error);
-            alert('버스 도착 정보를 가져오는 중 오류가 발생했습니다.');
-        });
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.BUSSTOP_LIST && data.BUSSTOP_LIST.length > 0) {
+                    data.BUSSTOP_LIST.forEach(bus => {
+                        if (preferredBusLines.includes(bus.LINE_ID)) {
+                            const busElement = document.createElement('div');
+                            busElement.classList.add('bus-arrival');
+                            busElement.innerHTML = `
+                                <strong>정류소 이름:</strong> ${bus.BUSSTOP_NAME} <br>
+                                <strong>노선 이름:</strong> ${bus.LINE_NAME} <br>
+                                <strong>도착 예상 시간:</strong> ${bus.REMAIN_MIN} 분 <br>
+                                <strong>남은 정류소:</strong> ${bus.REMAIN_STOP} <br>
+                                <strong>다음 정류소:</strong> ${bus.NEXT_BUSSTOP} <br>
+                                <strong>도착지:</strong> ${bus.DIR_END}
+                            `;
+                            busArrivalsContainer.appendChild(busElement);
+                        }
+                    });
+                } else {
+                    const noBusElement = document.createElement('div');
+                    noBusElement.classList.add('bus-arrival');
+                    noBusElement.innerHTML = '해당 정류소에 도착 예정인 버스가 없습니다.';
+                    busArrivalsContainer.appendChild(noBusElement);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching bus arrival data:', error);
+                alert('버스 도착 정보를 가져오는 중 오류가 발생했습니다.');
+            });
+    });
 });

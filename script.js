@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const arsNumber = '2223';
+    const preferredBusLines = ['160', '순환1'];  // 특정 노선 번호
     const corsProxy = 'https://api.allorigins.win/get?url=';
     const stationApiUrlBase = 'http://121.147.206.212/json/stationApi';
     const arriveApiUrlBase = 'http://121.147.206.212/json/arriveApi?BUSSTOP_ID=';
@@ -48,15 +49,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         </tr>
                     `;
                     parsedData.ARRIVE_LIST.forEach(bus => {
-                        const busRow = document.createElement('tr');
-                        busRow.innerHTML = `
-                            <td>${busStopName}</td>
-                            <td>${bus.LINE_NAME}</td>
-                            <td>${bus.REMAIN_MIN || '-'}</td>
-                            <td>${bus.REMAIN_STOP || '-'}</td>
-                            <td>${bus.DIR_END || '-'}</td>
-                        `;
-                        busTable.appendChild(busRow);
+                        if (preferredBusLines.includes(bus.LINE_NAME)) {
+                            const busRow = document.createElement('tr');
+                            busRow.innerHTML = `
+                                <td>${busStopName}</td>
+                                <td>${bus.LINE_NAME}</td>
+                                <td>${bus.REMAIN_MIN || '-'}</td>
+                                <td>${bus.REMAIN_STOP || '-'}</td>
+                                <td>${bus.DIR_END || '-'}</td>
+                            `;
+                            busTable.appendChild(busRow);
+                        }
                     });
                     busArrivalsContainer.appendChild(busTable);
                 } else {

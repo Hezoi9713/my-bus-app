@@ -1,5 +1,4 @@
 document.getElementById('getDownwardInfo').addEventListener('click', function() {
-    // 예제 ARS 번호와 노선 이름 배열 (사용자가 입력할 부분)
     const arsNumbers = ['2223', '3121', '1229'];  // 자주 가는 정류소의 ARS 번호
     const preferredBusLines = ['160', '순환1', '순환2', '급행01'];  // 자주 타는 버스 노선 번호
 
@@ -9,13 +8,13 @@ document.getElementById('getDownwardInfo').addEventListener('click', function() 
 
     arsNumbers.forEach(arsNumber => {
         const apiUrl = `${apiUrlBase}${arsNumber}`;
-
+        
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
                 if (data.BUSSTOP_LIST && data.BUSSTOP_LIST.length > 0) {
                     data.BUSSTOP_LIST.forEach(bus => {
-                        if (preferredBusLines.includes(bus.LINE_ID)) {
+                        if (preferredBusLines.includes(bus.LINE_NAME)) {
                             const busElement = document.createElement('div');
                             busElement.classList.add('bus-arrival');
                             busElement.innerHTML = `

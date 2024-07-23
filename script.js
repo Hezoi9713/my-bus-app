@@ -3,16 +3,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const arsNumbers = ['2223', '3121', '1229'];  // 자주 가는 정류소의 ARS 번호
         const preferredBusLines = ['160', '순환1', '순환2', '급행01'];  // 자주 타는 버스 노선 번호
 
+        // CORS Proxy를 사용한 API URL
+        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
         const apiUrlBase = 'http://121.147.206.212/json/arriveApi?BUSSTOP_ID=';
         const busArrivalsContainer = document.getElementById('busArrivals');
         busArrivalsContainer.innerHTML = '';
 
+        console.log('버튼 클릭됨');  // 버튼이 클릭되었는지 확인
+
         arsNumbers.forEach(arsNumber => {
-            const apiUrl = `${apiUrlBase}${arsNumber}`;
+            const apiUrl = `${corsProxy}${apiUrlBase}${arsNumber}`;
+
+            console.log(`Fetching data for ARS number: ${arsNumber}`);  // API 호출 여부 확인
 
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Data fetched:', data);  // 데이터가 잘 받아지는지 확인
+
                     if (data.BUSSTOP_LIST && data.BUSSTOP_LIST.length > 0) {
                         data.BUSSTOP_LIST.forEach(bus => {
                             if (preferredBusLines.includes(bus.LINE_NAME)) {

@@ -1,7 +1,7 @@
 document.getElementById('getDownwardInfo').addEventListener('click', function() {
     // 예제 ARS 번호와 노선 이름 배열 (사용자가 입력할 부분)
-    const arsNumbers = ['12345', '67890'];  // 자주 가는 정류소의 ARS 번호
-    const preferredBusLines = ['100', '200'];  // 자주 타는 버스 노선 번호
+    const arsNumbers = ['2223', '3121', '1229'];  // 자주 가는 정류소의 ARS 번호
+    const preferredBusLines = ['160', '순환1', '순환2', '급행01'];  // 자주 타는 버스 노선 번호
 
     const apiUrlBase = 'http://121.147.206.212/json/arriveApi?BUSSTOP_ID=';
     const busArrivalsContainer = document.getElementById('busArrivals');

@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.bus-stop-info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.bus-stop-info label,
+.bus-stop-info input,
+.bus-stop-info button {
+    margin-bottom: 10px;
+}
+
+#busArrivals {
+    font-size: 16px;
+}
+
+.bus-arrival {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.bus-arrival:last-child {
+    border-bottom: none;
+}

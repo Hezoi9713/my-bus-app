@@ -7,18 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const busArrivalsContainer = document.getElementById('busArrivals');
         busArrivalsContainer.innerHTML = '';
 
-        console.log('버튼 클릭됨');  // 버튼이 클릭되었는지 확인
-
         arsNumbers.forEach(arsNumber => {
             const apiUrl = `${apiUrlBase}${arsNumber}`;
-
-            console.log(`Fetching data for ARS number: ${arsNumber}`);  // API 호출 여부 확인
 
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Data fetched:', data);  // 데이터가 잘 받아지는지 확인
-
                     if (data.BUSSTOP_LIST && data.BUSSTOP_LIST.length > 0) {
                         data.BUSSTOP_LIST.forEach(bus => {
                             if (preferredBusLines.includes(bus.LINE_NAME)) {
